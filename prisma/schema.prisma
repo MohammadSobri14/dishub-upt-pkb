@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Artikel {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  tag       String
+  image     String[]   // ubah jadi array
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
