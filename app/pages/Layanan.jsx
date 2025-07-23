@@ -8,7 +8,7 @@ const Layanan = () => {
       id="layanan"
       className="w-full min-h-screen px-8 py-16 text-gray-800 scroll-mt-24 bg-gray-50"
     >
-      <div className="max-w-6xl mx-auto text-center">
+      <div className="max-w-6xl mx-auto text-center my-13">
         <h2 className="text-4xl font-bold text-[#341B6E] mb-6 border-b-4 border-[#F3C623] inline-block">
           Layanan Kami
         </h2>

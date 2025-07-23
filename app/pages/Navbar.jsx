@@ -79,10 +79,10 @@ const Navbar = () => {
           />
           <div className="px-2 leading-tight">
             <p className="text-[#341B6E] text-base font-bold font-poppins tracking-wide">
-              Dinas Perhubungan
+              UPT PKB
             </p>
             <p className="text-sm font-medium text-[#d4a90cdc] font-poppins">
-              Kota Yogyakarta
+              Dinas Perhubungan Kota Yogyakarta
             </p>
           </div>
         </a>
