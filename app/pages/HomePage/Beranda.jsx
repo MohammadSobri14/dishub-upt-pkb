@@ -87,7 +87,7 @@ const Beranda = () => {
                 Hubungi Kami
               </button>
 
-              <div className="flex items-center gap-4">
+              {/* <div className="flex items-center gap-4">
                 <div className="flex items-center justify-center bg-white rounded-full w-11 h-11">
                   <Image
                     src="/images/player.png"
@@ -102,7 +102,7 @@ const Beranda = () => {
                   <br />
                   pengantar profil kami
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -110,11 +110,11 @@ const Beranda = () => {
         {/* Kanan: Gambar */}
         <div className="flex justify-center w-full md:w-1/2">
           <Image
-            src="/images/walikota_jogja.png"
+            src="/images/logo-asik.png"
             alt="Hero"
-            width={408}
+            width={508}
             height={500}
-            className="relative z-10 hidden top-10 top-object-contain right-25 md:block"
+            className="relative z-10 hidden bottom-15 top-object-contain right-15 md:block"
           />
         </div>
       </div>

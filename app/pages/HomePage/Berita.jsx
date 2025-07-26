@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
 
 const beritaList = [
   {
@@ -55,7 +55,10 @@ export default function Berita() {
   };
 
   return (
-    <section id="berita" className="p-2 px-6 my-0 text-center bg-white">
+    <section
+      id="berita"
+      className="px-6 my-5 min-h-[600px] scroll-mt-25 text-center bg-white"
+    >
       <h2 className="text-4xl font-bold text-[#341B6E] mb-2 border-b-4 border-[#F3C623] inline-block">
         Berita Terbaru
       </h2>
@@ -83,7 +86,7 @@ export default function Berita() {
 
               {/* Overlay + Icon View saat Hover */}
               <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 bg-opacity-0 cursor-pointer backdrop-blur-0 group-hover:bg-opacity-30 group-hover:backdrop-blur-sm">
-                <div className="flex items-center gap-2 text-sm font-medium text-blue-400 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                <div className="flex items-center gap-2 text-sm font-medium text-gray-800 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-5 h-5"
@@ -123,44 +126,6 @@ export default function Berita() {
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Navigasi & Button */}
-      <div className="flex items-center justify-between px-2 py-2 mt-4">
-        {/* Berita Lain */}
-        <a
-          href="#"
-          className="px-4 py-2 border text-sm font-medium text-[#4a2b8f] border-[#4a2b8f] rounded-lg hover:bg-gray-100"
-        >
-          Berita Lain
-        </a>
-
-        {/* Arrow Navigation */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={handlePrev}
-            disabled={index === 0}
-            className={`p-2 border rounded-full ${
-              index === 0
-                ? "cursor-not-allowed text-gray-300 border-gray-200"
-                : "hover:bg-gray-100 text-[#341B6E] border cursor-pointer"
-            }`}
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-
-          <button
-            onClick={handleNext}
-            disabled={index >= maxIndex}
-            className={`p-2 border rounded-full ${
-              index >= maxIndex
-                ? "cursor-not-allowed text-gray-300 border-gray-200"
-                : "hover:bg-gray-100 text-[#341B6E] border cursor-pointer"
-            }`}
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </div>
       </div>
     </section>
   );

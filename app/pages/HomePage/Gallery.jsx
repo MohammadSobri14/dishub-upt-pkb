@@ -1,0 +1,77 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+
+const images = [
+  { src: "/images/1.jpg", alt: "Kegiatan 1" },
+  { src: "/images/2.jpg", alt: "Kegiatan 2" },
+  { src: "/images/3.jpg", alt: "Kegiatan 3" },
+  { src: "/images/4.jpg", alt: "Kegiatan 4" },
+  { src: "/images/drive-thru.jpg", alt: "Kegiatan 5" },
+  { src: "/images/1.jpg", alt: "Kegiatan 6" },
+  { src: "/images/2.jpg", alt: "Kegiatan 7" },
+  { src: "/images/3.jpg", alt: "Kegiatan 8" },
+  { src: "/images/4.jpg", alt: "Kegiatan 9" },
+  { src: "/images/drive-thru.jpg", alt: "Kegiatan 10" },
+  { src: "/images/1.jpg", alt: "Kegiatan 11" },
+];
+
+const visibleImages = 3; // jumlah gambar yang ditampilkan sekaligus
+
+const Gallery = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const maxIndex = images.length - visibleImages;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <section className="relative px-4 py-12 text-center bg-white">
+      <h2 className="text-4xl font-bold text-[#341B6E] mb-6 border-b-4 border-[#F3C623] inline-block">
+        Gallery
+      </h2>
+      <p className="max-w-3xl p-4 mx-auto mb-8 text-gray-600">
+        Beberapa galeri foto ditampilkan untuk mendokumentasikan setiap kegiatan
+        dan aktivitas yang telah dilaksanakan oleh UPT Pengujian Kendaraan
+        Bermotor Dinas Perhubungan Kota Yogyakarta.
+      </p>
+
+      {/* Carousel */}
+      <div className="overflow mx-full w-[1080px] border rounded-2xl">
+        <div
+          className="flex transition-transform duration-700 ease-in-out"
+          style={{
+            width: `${(100 / visibleImages) * images.length}%`,
+            transform: `translateX(-${(100 / images.length) * currentIndex}%)`,
+          }}
+        >
+          {images.map((image, idx) => (
+            <div
+              key={idx}
+              className="w-[calc(100%/3)] p-2"
+              style={{ width: `${100 / images.length}%` }}
+            >
+              <div className="w-full h-[200px] overflow-hidden rounded-xl shadow hover:shadow-lg transition">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={400}
+                  height={200}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Gallery;

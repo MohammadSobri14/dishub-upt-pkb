@@ -1,9 +1,10 @@
 import Navbar from "./pages/Navbar";
-import Beranda from "./pages/Beranda";
-import Profil from "./pages/Profil";
-import Layanan from "./pages/Layanan";
-import Gallery from "./pages/Gallery";
-import Berita from "./pages/Berita"
+import Beranda from "./pages/HomePage/Beranda";
+import Profil from "./pages/HomePage/Profil";
+import Layanan from "./pages/HomePage/Layanan";
+import Gallery from "./pages/HomePage/Gallery";
+import Berita from "./pages/HomePage/Berita"
+import Kontak from "./pages/HomePage/Kontak";
 
 export default function Home() {
   return (
@@ -12,8 +13,9 @@ export default function Home() {
       <Beranda />
       <Profil />
       <Layanan />
-      <Gallery />
       <Berita />
+      <Gallery />
+      <Kontak />
     </>
   );
 }

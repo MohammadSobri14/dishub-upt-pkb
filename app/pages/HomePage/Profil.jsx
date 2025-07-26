@@ -1,44 +1,14 @@
 "use client";
 
-import SliderGallery from "./components/SliderGallery";
+import SliderGallery from "../Components/SliderGallery";
 import React from "react";
 
 const Profil = () => {
   return (
     <section
       id="profil"
-      className="scroll-mt-24 w-full min-h-[633px] relative bg-white text-gray-800 px-8 overflow-hidden"
+      className="scroll-mt-24 w-full min-h-[633px] relative text-gray-800 px-8 overflow-hidden"
     >
-      {/* SVG Pattern Background */}
-      <div className="absolute inset-0 -z-10">
-        <svg
-          className="w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-          viewBox="0 0 1440 320"
-        >
-          <defs>
-            <pattern
-              id="dots"
-              x="0"
-              y="0"
-              width="40"
-              height="40"
-              patternUnits="userSpaceOnUse"
-            >
-              <circle
-                cx="2"
-                cy="2"
-                r="2"
-                className="text-gray-300"
-                fill="currentColor"
-              />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#dots)" opacity="0.2" />
-        </svg>
-      </div>
-
       {/* Content Container */}
       <div className="flex flex-col-reverse items-center max-w-6xl gap-12 py-12 mx-auto md:flex-row">
         {/* Text Content */}
@@ -46,13 +16,14 @@ const Profil = () => {
           <h2 className="text-4xl font-bold text-[#341B6E] mb-6 border-b-4 border-[#F3C623] inline-block">
             Tentang Kami
           </h2>
-          <p className="leading-relaxed text-gray-700">
+          <p className="leading-relaxed text-gray-700 indent-8 text-justify">
             UPT Pengujian Kendaraan Bermotor (PKB) merupakan unit pelaksana
             teknis di bawah naungan Dinas Perhubungan Kota Yogyakarta yang
             memiliki tugas utama dalam melaksanakan pelayanan pengujian
             kendaraan bermotor, baik kendaraan pribadi maupun angkutan umum,
-            kereta gandengan, maupun kereta tempelan. <br />
-            <br />
+            kereta gandengan, maupun kereta tempelan.
+          </p>
+          <p className="leading-relaxed text-gray-700 indent-8 mt-4 text-justify">
             Pengujian Kendaraan Bermotor adalah serangkaian kegiatan untuk
             mengukur, menguji, dan/atau memeriksa bagian-bagian teknis dan
             komponen kendaraan dalam rangka memastikan kendaraan tersebut
