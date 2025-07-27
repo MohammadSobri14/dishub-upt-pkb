@@ -1,8 +1,8 @@
 import React from "react";
 
-const Kontak = () => {
+const HubungiKami = () => {
   return (
-    <section id="kontak">
+    <section>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:py-10 lg:px-8">
         <div className="mt-8 lg:mt-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -59,4 +59,4 @@ const Kontak = () => {
   );
 };
 
-export default Kontak;
+export default HubungiKami;

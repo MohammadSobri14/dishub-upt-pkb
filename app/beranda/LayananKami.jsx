@@ -2,10 +2,9 @@
 
 import React from "react";
 
-const Layanan = () => {
+const LayananKami = () => {
   return (
     <section
-      id="layanan"
       className="w-full min-h-screen px-8 text-gray-800 scroll-mt-25 bg-gray-50"
     >
       <div className="max-w-6xl mx-auto text-center my-13">
@@ -56,4 +55,4 @@ const Layanan = () => {
   );
 };
 
-export default Layanan;
+export default LayananKami;

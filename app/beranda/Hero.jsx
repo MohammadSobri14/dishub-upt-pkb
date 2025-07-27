@@ -12,7 +12,7 @@ const TYPING_SPEED = 70; // ms per karakter
 const PAUSE_DURATION = 2000; // jeda sebelum menghapus
 const DELETE_SPEED = 40; // kecepatan menghapus huruf
 
-const Beranda = () => {
+const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -48,7 +48,6 @@ const Beranda = () => {
 
   return (
     <section
-      id="beranda"
       className="scroll-mt-24 w-full min-h-[633px] bg-cover bg-center bg-no-repeat relative flex items-center justify-center px-4 md:px-10 py-8"
       style={{ backgroundImage: "url('/images/hero.jpg')" }}
     >
@@ -122,4 +121,4 @@ const Beranda = () => {
   );
 };
 
-export default Beranda;
+export default Hero;

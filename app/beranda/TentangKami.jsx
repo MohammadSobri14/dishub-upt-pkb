@@ -3,10 +3,9 @@
 import SliderGallery from "../Components/SliderGallery";
 import React from "react";
 
-const Profil = () => {
+const TentangKami = () => {
   return (
     <section
-      id="profil"
       className="scroll-mt-24 w-full min-h-[633px] relative text-gray-800 px-8 overflow-hidden"
     >
       {/* Content Container */}
@@ -43,4 +42,4 @@ const Profil = () => {
   );
 };
 
-export default Profil;
+export default TentangKami;

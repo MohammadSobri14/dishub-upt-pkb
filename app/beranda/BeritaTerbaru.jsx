@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Calendar } from "lucide-react";
 
 const beritaList = [
@@ -37,7 +38,7 @@ const beritaList = [
   },
 ];
 
-export default function Berita() {
+export default function BeritaTerbaru() {
   const [index, setIndex] = useState(0);
   const visibleCards = 3;
   const maxIndex = beritaList.length - visibleCards;
@@ -56,7 +57,6 @@ export default function Berita() {
 
   return (
     <section
-      id="berita"
       className="px-6 my-5 min-h-[600px] scroll-mt-25 text-center bg-white"
     >
       <h2 className="text-4xl font-bold text-[#341B6E] mb-2 border-b-4 border-[#F3C623] inline-block">
@@ -126,6 +126,14 @@ export default function Berita() {
             </div>
           </div>
         ))}
+      </div>
+      {/* Tombol "Berita Lainnya" */}
+      <div className="mt-10">
+        <Link href="/berita">
+          <span className="inline-block px-6 py-3 text-white bg-[#341B6E] hover:bg-[#4A2E91] transition-colors duration-300 rounded-full shadow-md">
+            Berita Lainnya
+          </span>
+        </Link>
       </div>
     </section>
   );
