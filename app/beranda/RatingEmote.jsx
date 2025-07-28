@@ -15,12 +15,15 @@ export default function RatingEmote() {
 
   return (
     <div className="text-center p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-2 text-gray-800">
-        Penilaian Kepuasan Layanan
+      <h1 className="text-4xl font-bold text-[#341B6E] mb-6 border-b-4 border-[#F3C623] inline-block">
+        Penilaian Layanan Informasi
       </h1>
       <p className="text-gray-600 mb-6">
-        Kami ingin tahu pendapat Anda. Silakan beri rating terhadap layanan kami
-        dengan memilih emote yang paling sesuai dengan perasaan Anda.
+        Kami terus berupaya meningkatkan kualitas pelayanan pengujian kendaraan
+        bermotor.
+        <br /> Silakan isi survei berikut untuk memberikan penilaian anda
+        terhadap layanan kami. Pendapat anda sangat berarti bagi peningkatan
+        mutu pelayanan ke depan.
       </p>
 
       <div className="flex justify-center gap-6 flex-wrap">

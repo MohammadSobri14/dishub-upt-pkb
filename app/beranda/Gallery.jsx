@@ -17,7 +17,7 @@ const images = [
   { src: "/images/1.jpg", alt: "Kegiatan 11" },
 ];
 
-const visibleImages = 3; // jumlah gambar yang ditampilkan sekaligus
+const visibleImages = 3;
 
 const Gallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -27,12 +27,14 @@ const Gallery = () => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
     }, 3000);
-
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="relative px-4 py-12 text-center bg-white">
+    <section
+      className="relative px-4 pt-17 pb-34 text-center bg-white overflow-x-hidden"
+      style={{ backgroundImage: "url('/images/bg-batik.png')" }}
+    >
       <h2 className="text-4xl font-bold text-[#341B6E] mb-6 border-b-4 border-[#F3C623] inline-block">
         Gallery
       </h2>
@@ -42,8 +44,8 @@ const Gallery = () => {
         Bermotor Dinas Perhubungan Kota Yogyakarta.
       </p>
 
-      {/* Carousel */}
-      <div className="overflow mx-full w-[1080px] border rounded-2xl">
+      {/* Carousel container dengan overflow-x-hidden */}
+      <div className="relative w-screen left-1/2 -translate-x-1/2 overflow-hidden">
         <div
           className="flex transition-transform duration-700 ease-in-out"
           style={{
@@ -54,7 +56,7 @@ const Gallery = () => {
           {images.map((image, idx) => (
             <div
               key={idx}
-              className="w-[calc(100%/3)] p-2"
+              className="p-2"
               style={{ width: `${100 / images.length}%` }}
             >
               <div className="w-full h-[200px] overflow-hidden rounded-xl shadow hover:shadow-lg transition">

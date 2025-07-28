@@ -57,7 +57,8 @@ export default function BeritaTerbaru() {
 
   return (
     <section
-      className="px-6 my-5 min-h-[600px] scroll-mt-25 text-center bg-white"
+      className="px-6 pt-6 min-h-[600px] scroll-mt-25 text-center bg-white"
+      style={{ backgroundImage: "url('/images/bg-batik.png')" }}
     >
       <h2 className="text-4xl font-bold text-[#341B6E] mb-2 border-b-4 border-[#F3C623] inline-block">
         Berita Terbaru
@@ -65,7 +66,7 @@ export default function BeritaTerbaru() {
       <p className="max-w-3xl mx-auto mt-3 text-gray-600">
         Berita terbaru seputar kegiatan dan aktivitas UPT Pengujian Kendaraan
         Bermotor Dinas Perhubungan Kota Yogyakarta, serta informasi terkait
-        pengujian kendaraan, akan ditampilkan di sini.
+        pengujian kendaraan.
       </p>
 
       {/* Slide container tanpa animasi */}
@@ -128,7 +129,7 @@ export default function BeritaTerbaru() {
         ))}
       </div>
       {/* Tombol "Berita Lainnya" */}
-      <div className="mt-10">
+      <div className="mt-5">
         <Link href="/berita">
           <span className="inline-block px-6 py-3 text-white bg-[#341B6E] hover:bg-[#4A2E91] transition-colors duration-300 rounded-full shadow-md">
             Berita Lainnya

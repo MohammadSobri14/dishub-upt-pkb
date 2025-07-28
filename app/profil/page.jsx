@@ -1,14 +1,17 @@
 import Navbar from "../navbar";
-import SejarahSection from "./Sejarah";
+import TentangKami from "../beranda/TentangKami";
+import VisiMisi from "./VisiMisi";
+import Footer from "../Components/Footer";
+import StrukturOrganisasi from "./StrukturOrganisasi";
 
 export default function ProfilPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen px-6 py-10">
-        <SejarahSection />
-        {/* Tambah bagian lain nanti */}
-      </main>
+      <TentangKami />
+      <VisiMisi />
+      <StrukturOrganisasi />
+      <Footer />
     </>
   );
 }

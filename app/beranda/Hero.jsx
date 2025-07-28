@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const textOptions = [
-  "Dinas Perhubungan Kota Yogyakarta",
   "UPT Pengujian Kendaraan Bermotor",
+  "Dinas Perhubungan Kota Yogyakarta",
 ];
 
 const TYPING_SPEED = 70; // ms per karakter

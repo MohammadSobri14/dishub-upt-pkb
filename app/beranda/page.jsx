@@ -1,3 +1,4 @@
+import Navbar from "../navbar";
 import Hero from "./Hero";
 import Profil from "./TentangKami";
 import Layanan from "./LayananKami";
@@ -5,7 +6,7 @@ import Berita from "./BeritaTerbaru";
 import Gallery from "./Gallery";
 import Kontak from "./HubungiKami";
 import RatingEmote from "./RatingEmote";
-import Navbar from "../navbar";
+import Footer from "../Components/Footer";
 
 export default function Beranda() {
   return (
@@ -18,6 +19,7 @@ export default function Beranda() {
       <Gallery />
       <Kontak />
       <RatingEmote />
+      <Footer />
     </>
   );
 }
