@@ -6,7 +6,9 @@ import Berita from "./BeritaTerbaru";
 import Gallery from "./Gallery";
 import Kontak from "./HubungiKami";
 import RatingEmote from "./RatingEmote";
+import FaqPage from "../kontak/Faq";
 import Footer from "../Components/Footer";
+import WhatsAppFloatingButton from "../Components/WhatsAppFloatingButton";
 
 export default function Beranda() {
   return (
@@ -18,8 +20,10 @@ export default function Beranda() {
       <Berita />
       <Gallery />
       <Kontak />
+      <FaqPage />
       <RatingEmote />
       <Footer />
+      <WhatsAppFloatingButton />
     </>
   );
 }

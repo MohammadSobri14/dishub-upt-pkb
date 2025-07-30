@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import WhatsAppButton from "./Wa";
 
 const textOptions = [
   "UPT Pengujian Kendaraan Bermotor",
@@ -82,26 +83,39 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col items-center gap-4 py-4 sm:flex-row md:items-start">
-              <button className="px-5 py-3 bg-white border rounded-lg text-[#341B6E] font-semibold text-base font-poppins">
-                Hubungi Kami
-              </button>
+              {/* Tombol WhatsApp */}
+              <WhatsAppButton />
 
-              {/* <div className="flex items-center gap-4">
-                <div className="flex items-center justify-center bg-white rounded-full w-11 h-11">
+              {/* CTA */}
+              <div className="flex gap-4 justify-center">
+                <a
+                  href="https://play.google.com/store/apps/details?id=id.go.jogjakota.jogjasmartservice"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block hover:scale-105 transition-transform"
+                >
                   <Image
-                    src="/images/player.png"
-                    alt="Play"
-                    width={20}
-                    height={20}
-                    className="object-contain w-full h-full"
+                    src="/images/playstore.png"
+                    alt="Get it on Google Play"
+                    width={150}
+                    height={40}
                   />
-                </div>
-                <p className="text-base font-normal leading-tight text-white font-poppins md:text-left">
-                  Tonton video
-                  <br />
-                  pengantar profil kami
-                </p>
-              </div> */}
+                </a>
+
+                <a
+                  href="https://apps.apple.com/id/app/jogja-smart-service/id1568409193"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block hover:scale-105 transition-transform"
+                >
+                  <Image
+                    src="/images/appstore.png"
+                    alt="Download on the App Store"
+                    width={150}
+                    height={40}
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>

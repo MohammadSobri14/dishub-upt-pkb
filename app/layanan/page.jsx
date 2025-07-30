@@ -4,6 +4,7 @@ import Footer from "../Components/Footer";
 import StandarPelayanan from "./StandarPelayanan";
 import Pendaftaran from "./Pendaftaran";
 import Loket from "./Loket";
+import WhatsAppFloatingButton from "../Components/WhatsAppFloatingButton";
 
 export default function ProfilPage() {
   return (
@@ -16,6 +17,7 @@ export default function ProfilPage() {
         <Loket />
         <Footer />
       </main>
+        <WhatsAppFloatingButton />
     </>
   );
 }
