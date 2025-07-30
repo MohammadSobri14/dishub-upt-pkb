@@ -1,13 +1,21 @@
 import Navbar from "../navbar";
 import LayananSection from "./Layanan";
 import Footer from "../Components/Footer";
+import StandarPelayanan from "./StandarPelayanan";
+import Pendaftaran from "./Pendaftaran";
+import Loket from "./Loket";
 
 export default function ProfilPage() {
   return (
     <>
       <Navbar />
-      <LayananSection />
-      <Footer />
+      <main className="min-h-screen bg-gray-50">
+        <LayananSection />
+        <StandarPelayanan />
+        <Pendaftaran />
+        <Loket />
+        <Footer />
+      </main>
     </>
   );
 }

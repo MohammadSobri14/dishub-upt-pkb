@@ -61,3 +61,28 @@ html {
   font-display: swap;
 }
 
+@keyframes drawLineY {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 1.5rem;
+  }
+}
+
+@keyframes drawLineX {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-line-y {
+  animation: drawLineY 0.7s ease-out forwards;
+}
+
+.animate-line-x {
+  animation: drawLineX 0.7s ease-out forwards;
+}
