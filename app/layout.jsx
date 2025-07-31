@@ -1,32 +1,29 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-// Import font dari Google Fonts
-const geistSans = Geist({
+// Geist Sans
+const geistSans = localFont({
+  src: "./fonts/geist/webfonts/Geist-Regular.woff2",
+  display: "swap",
   variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: "swap",
 });
 
-const geistMono = Geist_Mono({
+// Geist Mono
+const geistMono = localFont({
+  src: "./fonts/geist-mono/webfonts/GeistMono-Regular.woff2",
+  display: "swap",
   variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
 });
 
-// Metadata untuk SEO / Head
 export const metadata = {
   title: "UPT PKB",
   description: "Sistem informasi pelayanan UPT PKB",
 };
 
-// Root layout
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="antialiased font-sans bg-white text-gray-900">
-        {children}
-      </body>
+      <body className="font-sans bg-white text-gray-900">{children}</body>
     </html>
   );
 }

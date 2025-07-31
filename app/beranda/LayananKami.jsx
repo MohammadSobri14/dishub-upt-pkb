@@ -9,6 +9,8 @@ import {
   Factory,
   Ban,
 } from "lucide-react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const layanan = [
   {
@@ -59,16 +61,28 @@ const LayananKami = () => {
         </p>
 
         <div className="grid gap-8 md:grid-cols-3">
-          {layanan.map((item, index) => (
-            <div
-              key={index}
-              className="p-6 transition duration-300 bg-[#341B6E] text-white shadow-md rounded-xl hover:shadow-lg text-left"
-            >
-              <div className="mb-4">{item.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-              <p className="text-sm">{item.desc}</p>
-            </div>
-          ))}
+          {layanan.map((item, index) => {
+            const delay = index * 0.15;
+            const { ref, inView } = useInView({
+              triggerOnce: true,
+              threshold: 0.2,
+            });
+
+            return (
+              <motion.div
+                ref={ref}
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay }}
+                className="p-6 transition bg-[#341B6E] text-white shadow-md rounded-xl hover:shadow-lg text-left"
+              >
+                <div className="mb-4">{item.icon}</div>
+                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                <p className="text-sm">{item.desc}</p>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
