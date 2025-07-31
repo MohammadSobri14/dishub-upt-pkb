@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE `artikel` ADD COLUMN `image` VARCHAR(191) NULL,
-    ADD COLUMN `tag` VARCHAR(191) NULL;
