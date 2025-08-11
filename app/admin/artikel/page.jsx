@@ -16,6 +16,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Pagination from "../../Components/Pagination";
 import ErrorToast from "../../Components/ErrorToast";
+import DeleteModal from "../../Components/DeleteModal";
+import SuccessToast from "../../Components/SuccessToast";
 
 export default function ArtikelTabel() {
   const [artikels, setArtikels] = useState([]);
@@ -31,6 +33,10 @@ export default function ArtikelTabel() {
   const router = useRouter();
   const [errorToastOpen, setErrorToastOpen] = useState(false);
   const [errorToastMessage, setErrorToastMessage] = useState("");
+  const [deleteId, setDeleteId] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [successToastOpen, setSuccessToastOpen] = useState(false);
+  const [successToastMessage, setSuccessToastMessage] = useState("");
 
   const fetchArtikel = async () => {
     try {
@@ -46,20 +52,18 @@ export default function ArtikelTabel() {
       });
 
       if (res.status === 401) {
-        // Unauthorized, munculkan toast dan redirect ke login
         setErrorToastMessage("Session habis, silakan login ulang.");
         setErrorToastOpen(true);
-
         setTimeout(() => {
           router.push("/login");
-        }, 3000); // tunggu 3 detik sebelum redirect
-
-        return; // hentikan proses fetch
+        }, 3000);
+        return;
       }
 
       if (!res.ok) {
         const errorText = await res.text();
-        console.error("Respon error:", res.status, errorText);
+        setErrorToastMessage("Gagal mengambil data artikel: " + errorText);
+        setErrorToastOpen(true);
         throw new Error("Gagal mengambil data artikel");
       }
 
@@ -69,7 +73,6 @@ export default function ArtikelTabel() {
       setArtikels(data);
       setFiltered(data);
     } catch (error) {
-      console.error("Gagal fetch artikel:", error);
       setErrorToastMessage(error.message || "Terjadi kesalahan");
       setErrorToastOpen(true);
     } finally {
@@ -77,34 +80,33 @@ export default function ArtikelTabel() {
     }
   };
 
+  const confirmDelete = (id) => {
+    setDeleteId(id);
+    setModalOpen(true);
+  };
 
-  const handleDelete = async (id) => {
-    const confirmDelete = confirm("Yakin ingin menghapus artikel ini?");
-    if (!confirmDelete) return;
-
+  const handleDelete = async () => {
+    if (!deleteId) return;
     try {
       const token = localStorage.getItem("token");
-      if (!token) return alert("Token tidak ditemukan");
-
-      const res = await fetch(`http://localhost:8000/api/artikel/${id}`, {
+      const res = await fetch(`http://localhost:8000/api/artikel/${deleteId}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-
       if (!res.ok) {
-        const errText = await res.text();
-        throw new Error("Gagal menghapus artikel");
+        const errorText = await res.text();
+        setErrorToastMessage("Gagal menghapus artikel: " + errorText);
+        setErrorToastOpen(true);
+        return;
       }
-
-      const updated = artikels.filter((item) => item.id !== id);
-      setArtikels(updated);
-      setFiltered(updated);
-    } catch (err) {
-      alert("Terjadi kesalahan saat menghapus artikel");
-      console.error(err);
+      setArtikels((prev) => prev.filter((a) => a.id !== deleteId));
+      setModalOpen(false);
+      setDeleteId(null);
+      setSuccessToastMessage("Artikel berhasil dihapus!");
+      setSuccessToastOpen(true);
+    } catch (error) {
+      setErrorToastMessage("Gagal menghapus artikel: " + (error.message || ""));
+      setErrorToastOpen(true);
     }
   };
 
@@ -382,7 +384,7 @@ export default function ArtikelTabel() {
                     <td className="py-3 px-4 text-center">
                       {item.gambar && item.gambar.length > 0 ? (
                         <img
-                          src={`http://localhost:8000/storage/gambar-artikel/${item.gambar[0]}`}
+                          src={item.gambar[0]}
                           alt="gambar artikel"
                           className="h-16 w-16 object-cover rounded text-center"
                         />
@@ -394,27 +396,27 @@ export default function ArtikelTabel() {
                       {item.gambar ? item.gambar.length : 0}
                     </td>
                     <td className="py-3 px-4 text-center">
-                      <div className="flex justify-center gap-3 text-lg">
+                      <div className="flex justify-center items-center gap-3 text-lg">
                         <Link
                           href={`/admin/artikel/${item.id}`}
-                          className="text-blue-600 hover:rounded"
+                          className="text-blue-600 hover:rounded transition-transform hover:scale-110 cursor-pointer"
                           title="Lihat"
                         >
-                          <FaEye />
+                          <FaEye size={20} />
                         </Link>
                         <Link
-                          href={`/admin/artikel/edit/${item.id}`}
-                          className="text-yellow-500 hover:rounded"
+                          href={`/admin/artikel/tambah?id=${item.id}`}
+                          className="text-yellow-500 hover:rounded transition-transform hover:scale-110 cursor-pointer"
                           title="Edit"
                         >
-                          <FaEdit />
+                          <FaEdit size={21} />
                         </Link>
                         <button
-                          onClick={() => handleDelete(item.id)}
-                          className="text-red-600 hover:rounded cursor-pointer"
+                          onClick={() => confirmDelete(item.id)}
+                          className="text-red-600 hover:rounded transition-transform hover:scale-110 cursor-pointer"
                           title="Hapus"
                         >
-                          <FaTrash />
+                          <FaTrash size={17} />
                         </button>
                       </div>
                     </td>
@@ -423,12 +425,25 @@ export default function ArtikelTabel() {
               )}
             </tbody>
           </table>
+          {/* Modal Konfirmasi */}
+          <DeleteModal
+            isOpen={modalOpen}
+            onClose={() => setModalOpen(false)}
+            onConfirm={handleDelete}
+            judul="Konfirmasi Hapus Artikel"
+          />
         </div>
         {/* Error Toast */}
         <ErrorToast
           message={errorToastMessage}
           isOpen={errorToastOpen}
           onClose={() => setErrorToastOpen(false)}
+        />
+        {/* Success Toast */}
+        <SuccessToast
+          isOpen={successToastOpen}
+          onClose={() => setSuccessToastOpen(false)}
+          message={successToastMessage}
         />
         {!loading && filtered.length > 0 && (
           <Pagination

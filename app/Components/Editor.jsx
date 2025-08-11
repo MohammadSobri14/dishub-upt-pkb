@@ -9,7 +9,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
 import Strike from "@tiptap/extension-strike";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 // Ikon custom sesuai toolbar Word style
 const icons = {
@@ -76,10 +76,18 @@ export default function EditorWordStyle({ onChange, content }) {
       },
     },
     onUpdate: ({ editor }) => {
-      onChange(editor.getText()); // hanya teks polos tanpa html
+      onChange(editor.getHTML()); // gunakan HTML agar isi terisi penuh
     },
     immediatelyRender: false,
   });
+
+  // Perbaikan: update content editor jika prop content berubah (misal saat edit)
+  useEffect(() => {
+    if (editor && typeof content === "string" && content !== editor.getHTML()) {
+      editor.commands.setContent(content || "", false);
+    }
+    // eslint-disable-next-line
+  }, [content, editor]);
 
   const triggerFileInput = () => {
     fileInputRef.current?.click();
@@ -244,4 +252,4 @@ export default function EditorWordStyle({ onChange, content }) {
       <EditorContent editor={editor} />
     </div>
   );
-}
+};
