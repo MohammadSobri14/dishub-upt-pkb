@@ -31,7 +31,7 @@ export default function Pagination({
         <button
           onClick={goToPrevious}
           disabled={currentPage === 1}
-          className="p-2 border rounded-md text-[#341B6E] border-blue-300 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 border rounded-md text-[#341B6E] border-gray-300 hover:bg-gray-50 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ChevronLeftIcon className="h-4 w-4" />
         </button>
@@ -43,7 +43,7 @@ export default function Pagination({
             className={`px-3 py-1 border rounded-md transition ${
               currentPage === page
                 ? "bg-[#341B6E] text-white"
-                : "text-[#341B6E] border-blue-300 bg-white hover:bg-blue-50"
+                : "text-[#341B6E] border-gray-300 bg-white hover:bg-gray-50 cursor-pointer"
             }`}
           >
             {page}
@@ -53,7 +53,7 @@ export default function Pagination({
         <button
           onClick={goToNext}
           disabled={currentPage === totalPages}
-          className="p-2 border rounded-md text-[#341B6E] border-blue-300 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 border rounded-md text-[#341B6E] border-gray-300 hover:bg-gray-50 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ChevronRightIcon className="h-4 w-4" />
         </button>

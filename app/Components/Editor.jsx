@@ -76,7 +76,7 @@ export default function EditorWordStyle({ onChange, content }) {
       },
     },
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
+      onChange(editor.getText()); // hanya teks polos tanpa html
     },
     immediatelyRender: false,
   });
@@ -220,6 +220,8 @@ export default function EditorWordStyle({ onChange, content }) {
           {icons.alignJustify}
         </button>
 
+        {/* Uncomment untuk aktifkan upload gambar */}
+        {/* 
         <button
           type="button"
           onClick={triggerFileInput}
@@ -234,7 +236,8 @@ export default function EditorWordStyle({ onChange, content }) {
           ref={fileInputRef}
           onChange={onUploadImage}
           className="hidden"
-        />
+        /> 
+        */}
       </div>
 
       {/* Editor content */}

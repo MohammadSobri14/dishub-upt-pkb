@@ -8,11 +8,14 @@ import {
   FaPlus,
   FaSearch,
   FaSort,
+  FaArrowDown,
+  FaArrowUp,
 } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Pagination from "../../Components/Pagination"; // Pastikan path sesuai
+import Pagination from "../../Components/Pagination";
+import ErrorToast from "../../Components/ErrorToast";
 
 export default function ArtikelTabel() {
   const [artikels, setArtikels] = useState([]);
@@ -24,8 +27,10 @@ export default function ArtikelTabel() {
   const itemsPerPage = 10;
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-
+  const [openSort, setOpenSort] = useState(false);
   const router = useRouter();
+  const [errorToastOpen, setErrorToastOpen] = useState(false);
+  const [errorToastMessage, setErrorToastMessage] = useState("");
 
   const fetchArtikel = async () => {
     try {
@@ -40,6 +45,18 @@ export default function ArtikelTabel() {
         },
       });
 
+      if (res.status === 401) {
+        // Unauthorized, munculkan toast dan redirect ke login
+        setErrorToastMessage("Session habis, silakan login ulang.");
+        setErrorToastOpen(true);
+
+        setTimeout(() => {
+          router.push("/login");
+        }, 3000); // tunggu 3 detik sebelum redirect
+
+        return; // hentikan proses fetch
+      }
+
       if (!res.ok) {
         const errorText = await res.text();
         console.error("Respon error:", res.status, errorText);
@@ -53,10 +70,13 @@ export default function ArtikelTabel() {
       setFiltered(data);
     } catch (error) {
       console.error("Gagal fetch artikel:", error);
+      setErrorToastMessage(error.message || "Terjadi kesalahan");
+      setErrorToastOpen(true);
     } finally {
       setLoading(false);
     }
   };
+
 
   const handleDelete = async (id) => {
     const confirmDelete = confirm("Yakin ingin menghapus artikel ini?");
@@ -171,9 +191,13 @@ export default function ArtikelTabel() {
     setCurrentPage(1);
   };
 
+  function truncateText(text, maxLength = 100) {
+    if (!text) return "";
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  }
+
   return (
     <div className="px-6 py-2 my-12 bg-white shadow rounded text-gray-700">
-      {/* Header & Toolbar */}
       {/* Header & Toolbar */}
       <div className="my-2">
         <h2 className="text-2xl font-bold text-[#341B6E] my-5">
@@ -213,16 +237,43 @@ export default function ArtikelTabel() {
             </div>
 
             {/* Sort */}
-            <div className="relative">
-              <FaSort className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <select
-                value={sortOrder}
-                onChange={handleSort}
-                className="w-40 border border-gray-300 pl-10 pr-3 py-2 rounded-lg focus:ring-2 focus:ring-[#341B6E] focus:border-[#341B6E] appearance-none hover:cursor-pointer"
+            <div className="relative w-33">
+              <button
+                type="button"
+                onClick={() => setOpenSort((prev) => !prev)}
+                className="w-full border border-gray-300 pl-10 pr-3 py-2 rounded-lg flex items-center justify-between focus:ring-2 focus:ring-[#341B6E] focus:border-[#341B6E] bg-white hover:cursor-pointer"
               >
-                <option value="desc">⬆️ Terbaru</option>
-                <option value="asc">⬇️ Terlama</option>
-              </select>
+                <FaSort className="absolute left-3 text-gray-400" />
+                <span className="flex items-center gap-2">
+                  {sortOrder === "desc" ? "Terbaru" : "Terlama"}
+                  {sortOrder === "desc" ? <FaArrowUp /> : <FaArrowDown />}
+                </span>
+              </button>
+
+              {openSort && (
+                <div className="absolute top-full left-0 mt-1 w-full border border-gray-300 bg-white rounded-lg shadow-md z-10">
+                  <div
+                    onClick={() => {
+                      handleSort({ target: { value: "desc" } });
+                      setOpenSort(false);
+                    }}
+                    className="flex items-center justify-center gap-2 px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                  >
+                    Terbaru
+                    <FaArrowUp />
+                  </div>
+                  <div
+                    onClick={() => {
+                      handleSort({ target: { value: "asc" } });
+                      setOpenSort(false);
+                    }}
+                    className="flex items-center justify-center gap-2 px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                  >
+                    Terlama
+                    <FaArrowDown />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -246,130 +297,149 @@ export default function ArtikelTabel() {
           </div>
         </div>
       </div>
-        <>
-          <div className="overflow-x-auto rounded-lg shadow">
-            <table className="min-w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
-              <thead className="text-4xs uppercase bg-[#341B6E] text-white border-b border-[#ccc]">
-                <tr>
-                  <th className="py-3 px-4 text-center">No</th>
-                  <th className="py-3 px-4 text-left">Judul</th>
-                  <th className="py-3 px-4 text-left">Tanggal Publish</th>
-                  <th className="py-3 px-4 text-left">Penulis</th>
-                  <th className="py-3 px-4 text-left">Isi</th>
-                  <th className="py-3 px-4 text-left">Gambar</th>
-                  <th className="py-3 px-4 text-center">Aksi</th>
-                </tr>
-              </thead>
+      <>
+        <div className="overflow-x-auto rounded-lg shadow">
+          <table className="min-w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
+            <thead className="text-4xs uppercase bg-[#341B6E] text-white border-b border-[#ccc]">
+              <tr>
+                <th className="py-3 px-4 text-center">No</th>
+                <th className="py-3 px-4 text-left">Judul</th>
+                <th className="py-3 px-4 text-center">Tanggal Publish</th>
+                {/* <th className="py-3 px-4 text-left">Penulis</th> */}
+                <th className="py-3 px-4 text-center">Isi</th>
+                <th className="py-3 px-4 text-center">Gambar</th>
+                <th className="py-3 px-4 text-center">Jumlah Gambar</th>
+                <th className="py-3 px-4 text-center">Aksi</th>
+              </tr>
+            </thead>
 
-              <tbody>
-                {loading ? (
-                  // Skeleton loading: 5 rows
-                  Array(5)
-                    .fill(0)
-                    .map((_, i) => (
-                      <tr
-                        key={i}
-                        className="border-b border-gray-200 odd:bg-white even:bg-gray-100"
-                      >
-                        {[...Array(7)].map((__, idx) => (
-                          <td key={idx} className="py-3 px-4 text-center">
-                            <div className="h-4 bg-gray-300 rounded animate-pulse max-w-[80px] mx-auto"></div>
-                          </td>
-                        ))}
-                      </tr>
-                    ))
-                ) : filtered.length === 0 ? (
-                  <tr>
-                    <td
-                      colSpan={7}
-                      className="py-6 text-center text-gray-500 font-medium"
-                    >
-                      Tidak ada artikel yang tersedia.
-                    </td>
-                  </tr>
-                ) : (
-                  paginatedData.map((item, index) => (
+            <tbody>
+              {loading ? (
+                // Skeleton loading: 5 rows
+                Array(8)
+                  .fill(0)
+                  .map((_, i) => (
                     <tr
-                      key={item.id}
-                      className="hover:bg-gray-100 transition duration-200 border-b border-gray-200 odd:bg-white even:bg-gray-100"
+                      key={i}
+                      className="border-b border-gray-200 odd:bg-white even:bg-gray-100"
                     >
-                      <td className="py-3 px-4 text-center text-sm text-gray-700">
-                        {(currentPage - 1) * itemsPerPage + index + 1}
-                      </td>
-                      <td className="py-3 px-4 font-semibold text-gray-800">
-                        {item.judul}
-                      </td>
-                      <td className="py-3 px-4 text-sm">
-                        {item.tanggal_publish
-                          ? new Date(item.tanggal_publish).toLocaleDateString(
-                              "id-ID",
-                              {
-                                day: "2-digit",
-                                month: "long",
-                                year: "numeric",
-                              }
-                            )
-                          : "-"}
-                      </td>
-                      <td className="py-3 px-4 text-sm">
-                        {item.user?.name || "-"}
-                      </td>
-                      <td className="py-3 px-4 max-w-xs truncate text-sm text-gray-600">
-                        {item.isi}
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        {item.gambar && item.gambar.length > 0 ? (
-                          <img
-                            src={`http://localhost:8000/storage/${item.gambar[0]}`}
-                            alt="gambar artikel"
-                            className="h-16 w-16 object-cover rounded"
-                          />
-                        ) : (
-                          "-"
-                        )}
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        <div className="flex justify-center gap-3 text-lg">
-                          <Link
-                            href={`/admin/artikel/${item.id}`}
-                            className="text-blue-600 hover:rounded"
-                            title="Lihat"
-                          >
-                            <FaEye />
-                          </Link>
-                          <Link
-                            href={`/admin/artikel/edit/${item.id}`}
-                            className="text-yellow-500 hover:rounded"
-                            title="Edit"
-                          >
-                            <FaEdit />
-                          </Link>
-                          <button
-                            onClick={() => handleDelete(item.id)}
-                            className="text-red-600 hover:rounded cursor-pointer"
-                            title="Hapus"
-                          >
-                            <FaTrash />
-                          </button>
-                        </div>
-                      </td>
+                      {[...Array(7)].map((__, idx) => (
+                        <td key={idx} className="py-3 px-4 text-center">
+                          <div className="h-4 bg-gray-300 rounded animate-pulse max-w-[80px] mx-auto"></div>
+                        </td>
+                      ))}
                     </tr>
                   ))
-                )}
-              </tbody>
-            </table>
-          </div>
+              ) : filtered.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className="py-6 text-center text-gray-500 font-medium"
+                  >
+                    Tidak ada artikel yang tersedia.
+                  </td>
+                </tr>
+              ) : (
+                paginatedData.map((item, index) => (
+                  <tr
+                    key={item.id}
+                    className="hover:bg-gray-100 transition duration-200 border-b border-gray-200 odd:bg-white even:bg-gray-100"
+                  >
+                    <td className="py-3 px-4 text-center text-sm text-gray-700">
+                      {(currentPage - 1) * itemsPerPage + index + 1}
+                    </td>
+                    <td className="py-3 px-4 font-semibold text-gray-800">
+                      {item.judul}
+                    </td>
+                    <td className="py-3 text-sm w-42 text-center truncate whitespace-nowrap">
+                      {item.tanggal_publish
+                        ? new Date(item.tanggal_publish).toLocaleDateString(
+                            "id-ID",
+                            {
+                              day: "2-digit",
+                              month: "long",
+                              year: "numeric",
+                            }
+                          )
+                        : "-"}
+                    </td>
+                    {/* <td className="py-3 px-4 text-sm">
+                      {item.user?.name || "-"}
+                    </td> */}
+                    <td
+                      className="py-3 px-4 max-w-xs text-sm text-gray-600"
+                      style={{
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        maxWidth: "16rem", // contoh 16rem = 256px, sesuaikan kebutuhan
+                      }}
+                      title={item.isi} // supaya kalau hover muncul full teks
+                    >
+                      {item.isi}
+                    </td>
 
-          {!loading && filtered.length > 0 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={Math.ceil(filtered.length / itemsPerPage)}
-              onPageChange={setCurrentPage}
-              itemsPerPage={itemsPerPage}
-              totalItems={filtered.length}
-            />
-          )}
-        </>
+                    <td className="py-3 px-4 text-center">
+                      {item.gambar && item.gambar.length > 0 ? (
+                        <img
+                          src={`http://localhost:8000/storage/gambar-artikel/${item.gambar[0]}`}
+                          alt="gambar artikel"
+                          className="h-16 w-16 object-cover rounded text-center"
+                        />
+                      ) : (
+                        "-"
+                      )}
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      {item.gambar ? item.gambar.length : 0}
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      <div className="flex justify-center gap-3 text-lg">
+                        <Link
+                          href={`/admin/artikel/${item.id}`}
+                          className="text-blue-600 hover:rounded"
+                          title="Lihat"
+                        >
+                          <FaEye />
+                        </Link>
+                        <Link
+                          href={`/admin/artikel/edit/${item.id}`}
+                          className="text-yellow-500 hover:rounded"
+                          title="Edit"
+                        >
+                          <FaEdit />
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(item.id)}
+                          className="text-red-600 hover:rounded cursor-pointer"
+                          title="Hapus"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+        {/* Error Toast */}
+        <ErrorToast
+          message={errorToastMessage}
+          isOpen={errorToastOpen}
+          onClose={() => setErrorToastOpen(false)}
+        />
+        {!loading && filtered.length > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.ceil(filtered.length / itemsPerPage)}
+            onPageChange={setCurrentPage}
+            itemsPerPage={itemsPerPage}
+            totalItems={filtered.length}
+          />
+        )}
+      </>
     </div>
   );
 }
