@@ -195,7 +195,9 @@ export default function ArtikelTabel() {
 
   function truncateText(text, maxLength = 100) {
     if (!text) return "";
-    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+    // Hapus tag HTML untuk preview di tabel
+    const plain = text.replace(/<[^>]+>/g, "");
+    return plain.length > maxLength ? plain.slice(0, maxLength) + "..." : plain;
   }
 
   return (
@@ -374,11 +376,11 @@ export default function ArtikelTabel() {
                         whiteSpace: "nowrap",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
-                        maxWidth: "16rem", // contoh 16rem = 256px, sesuaikan kebutuhan
+                        maxWidth: "16rem",
                       }}
-                      title={item.isi} // supaya kalau hover muncul full teks
+                      title={item.isi}
                     >
-                      {item.isi}
+                      {truncateText(item.isi, 100)}
                     </td>
 
                     <td className="py-3 px-4 text-center">

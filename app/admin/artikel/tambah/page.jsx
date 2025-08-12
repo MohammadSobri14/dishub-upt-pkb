@@ -115,7 +115,7 @@ export default function FormArtikel() {
     const formData = new FormData();
     formData.append("judul", judul);
     formData.append("tanggal_publish", tanggalPublish);
-    formData.append("isi", stripHtml(isi));
+    formData.append("isi", isi);
     if (lokasi) formData.append("lokasi", lokasi);
     gambarFiles.forEach((file) => {
       formData.append("gambar[]", file);
@@ -268,56 +268,66 @@ export default function FormArtikel() {
 
           {/* Gambar Lama */}
           {gambarLama.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-4">
-              {gambarLama.map((src, index) => (
-                <div
-                  key={index}
-                  className="relative w-24 h-24 rounded overflow-hidden border border-gray-300"
-                >
-                  <img
-                    src={src}
-                    alt={`Gambar lama ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveGambarLama(index)}
-                    className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 text-xs hover:cursor-pointer"
-                  >
-                    <FaTimes />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Gambar Baru */}
-          {gambarFiles.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-4">
-              {gambarFiles.map((file, index) => {
-                const objectUrl = URL.createObjectURL(file);
-                return (
+            <>
+              <span className="text-xs text-gray-500 mb-1 mt-1">
+                Gambar Lama :
+              </span>
+              <div className="mt-1 flex flex-row flex-wrap gap-4 ">
+                {gambarLama.map((src, index) => (
                   <div
                     key={index}
                     className="relative w-24 h-24 rounded overflow-hidden border border-gray-300"
                   >
                     <img
-                      src={objectUrl}
-                      alt={`Preview ${index + 1}`}
+                      src={src}
+                      alt={`Gambar lama ${index + 1}`}
                       className="w-full h-full object-cover"
-                      onLoad={() => URL.revokeObjectURL(objectUrl)}
                     />
                     <button
                       type="button"
-                      onClick={() => handleRemoveGambar(index)}
+                      onClick={() => handleRemoveGambarLama(index)}
                       className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 text-xs hover:cursor-pointer"
                     >
                       <FaTimes />
                     </button>
                   </div>
-                );
-              })}
-            </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Gambar Baru */}
+          {gambarFiles.length > 0 && (
+            <>
+              <span className="text-xs text-gray-500 mb-1 mt-2">
+                Gambar Baru :
+              </span>
+              <div className="mt-1 flex flex-row flex-wrap gap-4">
+                {gambarFiles.map((file, index) => {
+                  const objectUrl = URL.createObjectURL(file);
+                  return (
+                    <div
+                      key={index}
+                      className="relative w-24 h-24 rounded overflow-hidden border border-gray-300"
+                    >
+                      <img
+                        src={objectUrl}
+                        alt={`Preview ${index + 1}`}
+                        className="w-full h-full object-cover"
+                        onLoad={() => URL.revokeObjectURL(objectUrl)}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveGambar(index)}
+                        className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 text-xs hover:cursor-pointer"
+                      >
+                        <FaTimes />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
           )}
         </div>
 

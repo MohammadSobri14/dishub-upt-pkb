@@ -84,7 +84,7 @@ export default function DetailArtikel() {
 
         {/* Isi artikel */}
         <div
-          className="prose max-w-none"
+          className="max-w-none"
           dangerouslySetInnerHTML={{ __html: artikel.isi }}
         />
       </div>
