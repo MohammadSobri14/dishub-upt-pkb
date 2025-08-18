@@ -69,18 +69,20 @@ export default function DetailArtikel() {
         </p>
 
         {/* Gambar artikel */}
-        {artikel.gambar?.length > 0 && (
-          <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {artikel.gambar.map((img, index) => (
+        <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
+          {artikel.gambar.map((img, index) => (
+            <div
+              key={index}
+              className="flex justify-center items-center overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-shadow"
+            >
               <img
-                key={index}
                 src={img}
                 alt={`Gambar ${index + 1}`}
-                className="rounded shadow-md max-h-80 object-cover w-full"
+                className="object-contain max-h-80 w-auto mx-auto transform hover:scale-105 transition-transform duration-300"
               />
-            ))}
-          </div>
-        )}
+            </div>
+          ))}
+        </div>
 
         {/* Isi artikel */}
         <div

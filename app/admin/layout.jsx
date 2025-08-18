@@ -8,6 +8,7 @@ import {
   FaSignOutAlt,
   FaBars,
   FaTimes,
+  FaUsers,
 } from "react-icons/fa";
 
 export default function AdminLayout({ children }) {
@@ -91,6 +92,7 @@ shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-2px_rgba(0,0,0,0.05)]`}
 
           <nav className="px-4 py-5">
             <ul className="space-y-3">
+              {/* Dashboard */}
               <li>
                 <Link
                   href="/admin"
@@ -104,7 +106,23 @@ shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-2px_rgba(0,0,0,0.05)]`}
                   {sidebarOpen && <span className="truncate">Dashboard</span>}
                 </Link>
               </li>
-
+              {/* Menu Kelola User */}
+              <li>
+                <Link
+                  href="/admin/users"
+                  className={`flex items-center gap-3 px-4 py-2 rounded transition ${
+                    pathname.startsWith("/admin/users")
+                      ? "bg-[#341B6E] text-white"
+                      : "text-[#341B6E] hover:bg-[#341B6E] hover:text-white"
+                  }`}
+                >
+                  <FaUsers className="text-xl" />
+                  {sidebarOpen && (
+                    <span className="truncate">Kelola Pengguna</span>
+                  )}
+                </Link>
+              </li>
+              {/* Menu Kelola Artikel */}
               <li>
                 <Link
                   href="/admin/artikel"

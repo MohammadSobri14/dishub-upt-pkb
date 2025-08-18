@@ -1,19 +1,63 @@
+"use client";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import BeritaCard from "./BeritaCard";
-import SidebarBerita from "./SidebarBerita";
+import SideBerita from "./SideBerita";
 
-const beritaList = [
-  {
-    image: "/images/berita.png",
-    title:
-      'Dinas Perhubungan DIY Gelar "NGOPI": Soroti Tantangan Pengendalian Kecepatan Lalu Lintas yang Berbudaya',
-    date: "27/06/2025",
-    description:
-      "Yogyakarta – Dalam upaya menekan angka kecelakaan lalu lintas di Daerah Istimewa Yogyakarta (DIY), Dinas Perhubungan (Dishub) DIY menggelar forum diskusi bertajuk NGOPI (Ngobrol Permasalahan Transportasi) dengan tema “Alon-Alon Waton Klakon: Budaya vs Kecepatan”. Acara ini dibuka oleh Kepala Dishub DIY, Chrestina Erni Widyastuti, S.E., M.Si. dan menghadirkan tiga narasumber utama yaitu Anggota Komisi C DPRD DIY ...",
-  },
-  // Tambahkan berita lain jika diperlukan
-];
+// ⬅️ Skeleton loading
+function SkeletonCard({ type = "horizontal" }) {
+  return (
+    <div
+      className={`animate-pulse rounded-xl bg-gray-200 ${
+        type === "side" ? "h-[482px] w-[590px]" : "h-[150px] w-full"
+      }`}
+    ></div>
+  );
+}
 
 export default function BeritaPage() {
+  const [beritaList, setBeritaList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(6);
+
+  useEffect(() => {
+    const fetchBerita = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.warn("Token tidak ditemukan, user belum login.");
+          setLoading(false);
+          return;
+        }
+
+        const res = await fetch("http://127.0.0.1:8000/api/artikel", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          setBeritaList(data.data);
+        } else {
+          console.error("Gagal ambil artikel:", data.message);
+        }
+      } catch (err) {
+        console.error("Error fetch artikel:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBerita();
+  }, []);
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 2);
+  };
+
   return (
     <section
       className="w-full px-6 mt-12 py-10 bg-gray-50 bg-repeat"
@@ -25,46 +69,117 @@ export default function BeritaPage() {
         </h2>
       </div>
 
-      {/* Container utama bg-white */}
       <div className="max-w-7xl bg-white mx-auto px-4 py-5 rounded-2xl space-y-10">
-        {/* Grid isi utama: Sidebar dan horizontal */}
-        <main className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
-          {/* Sidebar */}
-          <aside className="md:col-span-2 ml-2 space-y-6 w-[642px] h-[570px] overflow-y-auto">
-            {beritaList.map((berita, idx) => (
-              <SidebarBerita key={idx} {...berita} />
-            ))}
-          </aside>
+        {loading ? (
+          <>
+            {/* Skeleton Grid isi utama */}
+            <main className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
+              <aside className="md:col-span-2 ml-2 space-y-6 w-[640px]">
+                <SkeletonCard type="side" />
+              </aside>
+              <div className="md:col-span-2 space-y-4">
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+              </div>
+            </main>
 
-          {/* Berita Horizontal */}
-          <div className="md:col-span-2 space-y-4">
-            {Array(4)
-              .fill(null)
-              .map((_, i) =>
-                beritaList.map((berita, idx) => (
-                  <BeritaCard key={`h-${i}-${idx}`} {...berita} />
-                ))
-              )}
-          </div>
-        </main>
-
-        {/* Berita Vertikal */}
-        <div>
-          <div className="flex items-center mb-4">
-            <div className="border-l-4 border-[#F3C623] pl-3">
-              <h3 className="text-xl font-semibold text-gray-800">
-                Berita Lainnya
-              </h3>
-              <div className="relative left-38 -top-3 w-[1030px] h-[2px] bg-[#F3C623] "></div>
+            {/* Skeleton Berita Lainnya */}
+            <div>
+              <div className="flex items-center mb-4">
+                <div className="border-l-4 border-[#F3C623] pl-3">
+                  <h3 className="text-xl font-semibold text-gray-800">
+                    Berita Lainnya
+                  </h3>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-x-6 gap-y-8">
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+              </div>
             </div>
-          </div>
+          </>
+        ) : beritaList.length === 0 ? (
+          <p className="text-gray-500 text-center">Belum ada berita.</p>
+        ) : (
+          <>
+            {/* Grid isi utama */}
+            <main className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
+              {/* Side Berita */}
+              <aside className="md:col-span-2 ml-2 space-y-6 w-[640px]">
+                {beritaList.length > 0 && (
+                  <SideBerita
+                    key={beritaList[0].id}
+                    title={beritaList[0].judul}
+                    date={beritaList[0].tanggal_publish}
+                    description={beritaList[0].isi?.substring(0, 150) + "..."}
+                    image={beritaList[0].gambar?.[0] || "/images/default.png"}
+                  />
+                )}
+              </aside>
 
-          <div className="grid grid-cols-2 gap-x-6 gap-y-8">
-            {beritaList.slice(0, 10).map((berita, idx) => (
-              <BeritaCard key={`v-${idx}`} {...berita} layout="vertical" />
-            ))}
-          </div>
-        </div>
+              {/* Berita Horizontal */}
+              <div className="md:col-span-2 space-y-4">
+                {beritaList.slice(1, 4).map((berita, idx) => (
+                  <BeritaCard
+                    key={berita.id || idx}
+                    title={berita.judul}
+                    date={berita.tanggal_publish}
+                    description={berita.isi?.substring(0, 150) + "..."}
+                    image={berita.gambar?.[0] || "/images/default.png"}
+                  />
+                ))}
+              </div>
+            </main>
+
+            {/* Berita Vertikal */}
+            <div>
+              <div className="flex items-center mb-4">
+                <div className="border-l-4 border-[#F3C623] pl-3">
+                  <h3 className="text-xl font-semibold text-gray-800">
+                    Berita Lainnya
+                  </h3>
+                  <div className="relative left-38 -top-3 w-[1030px] h-[2px] bg-[#F3C623] "></div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-x-6 gap-y-8">
+                <AnimatePresence>
+                  {beritaList.slice(4, 4 + visibleCount).map((berita, idx) => (
+                    <motion.div
+                      key={berita.id || idx}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                    >
+                      <BeritaCard
+                        title={berita.judul}
+                        date={berita.tanggal_publish}
+                        description={berita.isi?.substring(0, 150) + "..."}
+                        image={berita.gambar?.[0] || "/images/default.png"}
+                      />
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+
+              {/* Tombol Berita Lainnya */}
+              {visibleCount + 4 < beritaList.length && (
+                <div className="text-center mt-6">
+                  <button
+                    onClick={handleLoadMore}
+                    className="px-6 py-2 bg-[#341B6E] text-white font-semibold rounded-lg shadow hover:bg-[#2a1459] transition cursor-pointer"
+                  >
+                    Berita Lainnya
+                  </button>
+                </div>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
