@@ -55,9 +55,9 @@ export default function AdminLayout({ children }) {
         className={`${
           sidebarOpen ? "w-64" : "w-21"
         } bg-gradient-to-b from-indigo-500/70 via-purple-500/70 to-pink-500/70 
-backdrop-blur-lg text-[#341B6E] flex flex-col justify-between 
-transition-all duration-300 overflow-hidden border-r border-white/10
-shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-2px_rgba(0,0,0,0.05)]`}
+          backdrop-blur-lg text-[#341B6E] flex flex-col justify-between 
+          transition-all duration-300 overflow-hidden border-r border-white/10
+          shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-2px_rgba(0,0,0,0.05)]`}
       >
         <div>
           <div className="relative border-b border-gray-700 py-5">

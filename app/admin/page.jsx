@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { FaNewspaper, FaUsers } from "react-icons/fa";
+import CountUp from "react-countup"; // ✅ import CountUp
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({
-    totalBerita: 0,
-    totalUsers: 0,
+    totalBerita: null, // ⬅️ null dulu, biar tau masih loading
+    totalUsers: null,
   });
 
   useEffect(() => {
@@ -44,7 +45,6 @@ export default function DashboardPage() {
     fetchStats();
   }, []);
 
-
   const cards = [
     {
       title: "Total Artikel",
@@ -72,7 +72,15 @@ export default function DashboardPage() {
           >
             <div className="mb-3">{card.icon}</div>
             <p className="text-gray-700 font-semibold mb-2">{card.title}</p>
-            <p className="text-3xl font-bold text-gray-900">{card.value}</p>
+
+            {/* ✅ kalau masih loading tampilkan "..." */}
+            {card.value === null ? (
+              <p className="text-2xl font-semibold text-gray-400">...</p>
+            ) : (
+              <p className="text-3xl font-bold text-gray-900">
+                <CountUp end={card.value} duration={2} separator="," />
+              </p>
+            )}
           </div>
         ))}
       </div>
