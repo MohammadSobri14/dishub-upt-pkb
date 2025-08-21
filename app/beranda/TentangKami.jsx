@@ -6,15 +6,15 @@ import React from "react";
 const TentangKami = () => {
   return (
     <section
-      className="scroll-mt-24 w-full min-h-[633px] relative text-gray-800 px-8 overflow-hidden"
+      className="scroll-mt-24 w-full min-h-[633px] relative text-gray-800 px-4 sm:px-6 md:px-8 overflow-hidden"
       style={{ backgroundImage: "url('/images/bg-batik.png')" }}
     >
       {/* Content Container */}
-      <div className="flex flex-col-reverse items-center max-w-6xl gap-12 py-5 mx-auto md:flex-row">
+      <div className="flex flex-col-reverse mt-15 items-center gap-12 py-5 mx-auto md:flex-row md:max-w-6xl">
         {/* Text Content */}
         <div className="w-full md:w-[40%]">
-          <div className="relative w-full items-center top-25 md:w-full bg-white opacity-90 shadow-lg rounded-lg p-6">
-            <h2 className="text-4xl font-bold text-[#341B6E] mb-6 border-b-4 border-[#F3C623] inline-block">
+          <div className="relative w-full bg-white opacity-90 shadow-lg rounded-lg p-4 sm:p-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#341B6E] mb-6 border-b-4 border-[#F3C623] inline-block">
               Tentang Kami
             </h2>
             <p className="leading-relaxed text-gray-700 indent-8 text-justify">
@@ -36,7 +36,7 @@ const TentangKami = () => {
 
         {/* Slider Gallery */}
         <div className="w-full md:w-1/2">
-          <div className="relative h-full top-22 md:h-full">
+          <div className="relative h-full md:h-full">
             <SliderGallery />
           </div>
         </div>

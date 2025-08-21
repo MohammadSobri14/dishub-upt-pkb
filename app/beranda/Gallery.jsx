@@ -17,10 +17,27 @@ const images = [
   { src: "/images/1.jpg", alt: "Kegiatan 11" },
 ];
 
-const visibleImages = 3;
-
 const Gallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleImages, setVisibleImages] = useState(3);
+
+  // atur jumlah gambar sesuai ukuran layar
+  useEffect(() => {
+    const updateVisibleImages = () => {
+      if (window.innerWidth < 640) {
+        setVisibleImages(1); // smartphone
+      } else if (window.innerWidth < 1024) {
+        setVisibleImages(2); // tablet
+      } else {
+        setVisibleImages(3); // desktop
+      }
+    };
+
+    updateVisibleImages();
+    window.addEventListener("resize", updateVisibleImages);
+    return () => window.removeEventListener("resize", updateVisibleImages);
+  }, []);
+
   const maxIndex = images.length - visibleImages;
 
   useEffect(() => {
@@ -28,7 +45,7 @@ const Gallery = () => {
       setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [maxIndex]);
 
   return (
     <section
@@ -44,7 +61,7 @@ const Gallery = () => {
         Bermotor Dinas Perhubungan Kota Yogyakarta.
       </p>
 
-      {/* Carousel container dengan overflow-x-hidden */}
+      {/* Carousel container */}
       <div className="relative w-screen left-1/2 -translate-x-1/2 overflow-hidden">
         <div
           className="flex transition-transform duration-700 ease-in-out"
@@ -59,12 +76,12 @@ const Gallery = () => {
               className="p-2"
               style={{ width: `${100 / images.length}%` }}
             >
-              <div className="w-full h-[200px] overflow-hidden rounded-xl shadow hover:shadow-lg transition">
+              <div className="w-full h-[180px] sm:h-[220px] md:h-[250px] overflow-hidden rounded-xl shadow hover:shadow-lg transition">
                 <Image
                   src={image.src}
                   alt={image.alt}
                   width={400}
-                  height={200}
+                  height={250}
                   className="object-cover w-full h-full"
                 />
               </div>

@@ -63,8 +63,8 @@ const FaqPage = () => {
 
         {/* FAQ */}
         <div>
-          <h2 className="text-3xl text-black font-bold mb-10 border-b-4 border-[#F3C623] inline-block">
-            Frequently Asked Questions
+          <h2 className="text-3xl text-black font-bold mb-10 border-b-4 border-[#F3C623] inline-block text-center md:text-left">
+            Pertanyaan yang Sering Diajukan
           </h2>
           <div className="space-y-4">
             {faqData.map((faq, index) => {

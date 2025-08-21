@@ -15,10 +15,12 @@ export default function RatingEmote() {
 
   return (
     <div className="text-center p-6 max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold text-[#341B6E] mb-6 border-b-4 border-[#F3C623] inline-block">
+      <h1 className="text-3xl md:text-4xl font-bold text-[#341B6E] mb-6 border-b-4 border-[#F3C623] inline-block">
         Penilaian Layanan Informasi
       </h1>
-      <p className="text-gray-600 mb-6">
+
+      {/* Paragraf responsif */}
+      <p className="text-gray-600 mb-6 text-center md:text-left text-sm md:text-base leading-relaxed">
         Kami terus berupaya meningkatkan kualitas pelayanan pengujian kendaraan
         bermotor.
         <br /> Silakan isi survei berikut untuk memberikan penilaian anda

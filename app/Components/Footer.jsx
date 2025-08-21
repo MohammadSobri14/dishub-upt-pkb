@@ -1,6 +1,6 @@
 import React from "react";
 import { MapPin, Mail, Phone } from "lucide-react";
-import { Facebook, Instagram, Linkedin } from "lucide-react"; // Gunakan lucide-react atau ganti sesuai ikon kamu
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -15,9 +15,9 @@ const Footer = () => {
       </div>
 
       {/* Konten utama */}
-      <div className="max-w-full bg-[#120378] mx-auto px-15 pt-3 grid md:grid-cols-2 gap-10 items-start">
+      <div className="max-w-full bg-[#120378] mx-auto px-4 sm:px-6 lg:px-12 pt-6 grid md:grid-cols-2 gap-10 items-start">
         {/* Kiri: Logo dan nama instansi */}
-        <div className="flex flex-col mt-5 gap-4">
+        <div className="flex flex-col gap-4">
           <div className="flex items-center gap-4">
             <img
               src="/images/logo-dishub.png"
@@ -30,7 +30,7 @@ const Footer = () => {
               className="h-12"
             />
           </div>
-          <h2 className="text-lg md:text-xl font-bold leading-snug">
+          <h2 className="text-base sm:text-lg md:text-xl font-bold leading-snug">
             UPT PENGUJIAN KENDARAAN BERMOTOR
             <br />
             DINAS PERHUBUNGAN KOTA YOGYAKARTA
@@ -38,7 +38,7 @@ const Footer = () => {
         </div>
 
         {/* Kanan: Info kontak */}
-        <div className="flex flex-col mt-11 gap-4 text-sm md:text-base">
+        <div className="flex flex-col gap-3 text-sm md:text-base">
           <p className="flex items-start gap-2">
             <MapPin className="w-5 h-5" />
             Office : Jl. Lingkar Selatan Umbulharjo, Yogyakarta 55163
@@ -57,7 +57,7 @@ const Footer = () => {
       {/* Garis dan copyright */}
       <div className="bg-[#120378] text-white text-sm text-center py-5">
         {/* Ikon sosial media */}
-        <div className="flex gap-4 my-4 justify-end mr-28">
+        <div className="flex gap-4 my-4 justify-center md:justify-end md:mr-12">
           <a href="#" className="hover:text-gray-300">
             <Facebook size={20} />
           </a>
@@ -68,7 +68,10 @@ const Footer = () => {
             <Linkedin size={20} />
           </a>
         </div>
-        <div className="w-[1069px] border-t-3 border-[#F3C623] mx-auto mb-2" />
+
+        {/* Garis responsif */}
+        <div className="w-full max-w-6xl border-t-2 border-[#F3C623] mx-auto mb-2" />
+
         <p>Hak Cipta 2025 UPT PKB Dishub Kota Yogyakarta</p>
       </div>
     </footer>

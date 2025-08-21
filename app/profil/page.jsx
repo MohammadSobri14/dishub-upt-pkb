@@ -12,7 +12,9 @@ export default function ProfilPage() {
   return (
     <>
       <Navbar />
-      <TentangKami />
+      <div className=" py-12">
+        <TentangKami />
+      </div>
       <VisiMisi />
       <Fasilitas />
       <TugasFungsiPage />
