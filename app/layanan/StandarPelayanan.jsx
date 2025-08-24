@@ -106,7 +106,6 @@ const StandarPelayanan = () => {
   const [index, setIndex] = useState(0);
   const item = data[index];
 
-  // Auto slide effect
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % data.length);
@@ -114,39 +113,24 @@ const StandarPelayanan = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleNext = () => {
-    setIndex((prev) => (prev + 1) % data.length);
-  };
-
-  const handlePrev = () => {
+  const handleNext = () => setIndex((prev) => (prev + 1) % data.length);
+  const handlePrev = () =>
     setIndex((prev) => (prev - 1 + data.length) % data.length);
-  };
-
-  const handleDotClick = (i) => {
-    setIndex(i);
-  };
 
   return (
-    <section className="bg-gray-50 min-h-screen py-12 px-6 md:px-20">
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#341B6E] border-b-4 border-[#F3C623] inline-block">
+    <section className="bg-gray-50 py-12 px-4 sm:px-8 lg:px-20">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+        <h2 className="text-2xl md:text-4xl font-bold text-[#341B6E] border-b-4 border-[#F3C623] inline-block">
           Standar Pelayanan Publik
         </h2>
-        <Image
-          src="/images/garis.png"
-          alt="Garis"
-          width={120}
-          height={40}
-          className="object-contain h-10 w-auto"
-        />
       </div>
 
-      <div className="flex flex-col md:flex-row items-start gap-6">
-        {/* Gambar kiri */}
-        <div className="relative rounded-xl overflow-hidden max-w-[600px] w-full shadow-md h-[400px]">
+      <div className="flex flex-col lg:flex-row items-start gap-6">
+        {/* Gambar */}
+        <div className="relative rounded-xl overflow-hidden w-full lg:w-[50%] h-[250px] sm:h-[350px] lg:h-[400px] shadow-md">
           <button
             onClick={handlePrev}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-white text-[#341B6E] p-2 rounded-full shadow z-10 hover:cursor-pointer"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-white text-[#341B6E] p-2 rounded-full shadow z-10"
           >
             <ChevronLeft size={24} />
           </button>
@@ -163,23 +147,22 @@ const StandarPelayanan = () => {
               <Image
                 src={item.image}
                 alt={item.title}
-                width={600}
-                height={400}
-                className="object-cover w-full h-full"
+                fill
+                className="object-cover"
               />
             </motion.div>
           </AnimatePresence>
 
           <button
             onClick={handleNext}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-white text-[#341B6E] p-2 rounded-full shadow z-10 hover:cursor-pointer"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-white text-[#341B6E] p-2 rounded-full shadow z-10"
           >
             <ChevronRight size={24} />
           </button>
         </div>
 
         {/* Deskripsi */}
-        <div className="bg-blue-800 text-white rounded-xl p-6 md:p-8 w-full max-w-xl shadow-md min-h-[400px] flex flex-col justify-between">
+        <div className="bg-blue-800 text-white rounded-xl p-5 sm:p-6 lg:p-8 w-full lg:w-[50%] shadow-md min-h-[250px] sm:min-h-[350px] flex flex-col justify-between">
           <AnimatePresence mode="wait">
             <motion.div
               key={item.title}
@@ -188,13 +171,13 @@ const StandarPelayanan = () => {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.4 }}
             >
-              <h3 className="text-xl md:text-2xl font-bold mb-4">
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4">
                 {item.title}
               </h3>
 
               <div className="mb-4">
                 <h4 className="font-semibold">Syarat:</h4>
-                <ul className="list-disc ml-5 text-sm md:text-base">
+                <ul className="list-disc ml-5 text-xs sm:text-sm lg:text-base">
                   {item.syarat.map((syarat, i) => (
                     <li key={i}>{syarat}</li>
                   ))}
@@ -203,14 +186,14 @@ const StandarPelayanan = () => {
 
               <div className="mb-4">
                 <h4 className="font-semibold">Prosedur:</h4>
-                <ol className="list-decimal ml-5 text-sm md:text-base space-y-1">
+                <ol className="list-decimal ml-5 text-xs sm:text-sm lg:text-base space-y-1">
                   {item.prosedur.map((step, i) => (
                     <li key={i}>{step}</li>
                   ))}
                 </ol>
               </div>
 
-              <p className="font-semibold text-sm md:text-base">
+              <p className="font-semibold text-xs sm:text-sm lg:text-base">
                 Produk Layanan:{" "}
                 <span className="font-normal">{item.produk}</span>
               </p>
@@ -220,24 +203,17 @@ const StandarPelayanan = () => {
       </div>
 
       {/* Dot Indicator */}
-      <div className="flex justify-center mt-6 space-x-3">
+      <div className="flex justify-center mt-6 space-x-2 sm:space-x-3">
         {data.map((_, i) => (
           <button
             key={i}
-            onClick={() => handleDotClick(i)}
-            className={`w-3 h-3 rounded-full transition-all ${
+            onClick={() => setIndex(i)}
+            className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all ${
               i === index ? "bg-[#341B6E] scale-125" : "bg-gray-300 border"
             }`}
           ></button>
         ))}
       </div>
-      <Image
-        src="/images/garis.png"
-        alt="Garis"
-        width={120}
-        height={40}
-        className="object-contain h-10 w-auto"
-      />
     </section>
   );
 };

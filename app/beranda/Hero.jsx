@@ -20,7 +20,7 @@ const Hero = () => {
             <h1 className="text-2xl sm:text-3xl md:text-[40px] font-bold font-poppins text-white leading-snug">
               Selamat Datang di
               <br />
-              Unit Pengujian Kendaraan Bermotor
+              UPT Pengujian Kendaraan Bermotor
               <br />
               Dinas Perhubungan Kota Yogyakarta
             </h1>

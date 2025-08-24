@@ -92,33 +92,34 @@ const LayananSection = () => {
     setDirection(-1);
     setIndex((prev) => (prev === 0 ? layananList.length - 1 : prev - 1));
   };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setDirection(1);
       setIndex((prev) => (prev + 1) % layananList.length);
-    }, 7000); // ganti setiap 5 detik
+    }, 7000);
 
-    return () => clearInterval(interval); // bersihkan interval saat unmount
+    return () => clearInterval(interval);
   }, []);
 
   const layanan = layananList[index];
 
   return (
     <section
-      className="w-full px-6 mt-12 py-10 bg-gray-50 bg-repeat"
+      className="w-full px-4 md:px-6 mt-12 py-10 bg-gray-50 bg-repeat"
       style={{ backgroundImage: "url('/images/bg-batik.png')" }}
     >
       <div className="max-w-6xl mx-auto">
         {/* Judul Section */}
-        <div className="text-center mb-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#341B6E] mb-4 border-b-4 border-[#F3C623] inline-block">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl md:text-4xl font-bold text-[#341B6E] mb-4 border-b-4 border-[#F3C623] inline-block">
             Layanan Kami
           </h2>
         </div>
 
         {/* Deskripsi UPT */}
         <div className="mb-6">
-          <p className="relative left-42 max-w-3xl mx-auto bg-[#341B6E] text-sm text-white px-4 py-3 rounded-md shadow-sm">
+          <p className="max-w-3xl mx-auto bg-[#341B6E] text-xs md:text-sm text-white px-4 py-3 rounded-md shadow-sm text-center md:text-left">
             <strong>UPT Pengujian Kendaraan Bermotor (PKB)</strong> Dinas
             Perhubungan Kota Yogyakarta menyediakan berbagai layanan terkait
             pengujian teknis kendaraan bermotor sebagai bagian dari upaya
@@ -127,9 +128,9 @@ const LayananSection = () => {
         </div>
 
         {/* Konten */}
-        <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
           {/* Gambar */}
-          <div className="md:w-[500px] h-[360px] -mt-4 md:-mt-14 flex justify-center items-center rounded-lg shadow-md bg-white">
+          <div className="w-full md:w-[45%]">
             <AnimatePresence mode="wait">
               <motion.img
                 key={layanan.image}
@@ -139,13 +140,13 @@ const LayananSection = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
-                className="w-[295px] h-[310px] rounded-lg object-cover overflow-hidden shadow-md"
+                className="w-full h-[260px] md:h-[360px] rounded-lg object-cover shadow-md"
               />
             </AnimatePresence>
           </div>
 
           {/* Deskripsi */}
-          <div className="md:w-2/3 w-full bg-white p-6 rounded-xl shadow-md border">
+          <div className="w-full md:w-[55%] bg-white p-4 md:p-6 rounded-xl shadow-md border">
             <AnimatePresence mode="wait">
               <motion.div
                 key={layanan.title}
@@ -154,16 +155,20 @@ const LayananSection = () => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
               >
-                <h3 className="text-xl md:text-2xl font-semibold text-[#341B6E] mb-4 border-b-4 border-[#F3C623] inline-block">
+                <h3 className="text-lg md:text-2xl font-semibold text-[#341B6E] mb-4 border-b-4 border-[#F3C623] inline-block">
                   {layanan.title}
                 </h3>
-                <p className="mb-3 text-gray-700">{layanan.description}</p>
-                <ul className="list-disc list-inside mb-3 space-y-1 text-gray-700">
+                <p className="mb-3 text-gray-700 text-sm md:text-base">
+                  {layanan.description}
+                </p>
+                <ul className="list-disc list-inside mb-3 space-y-1 text-gray-700 text-sm md:text-base">
                   {layanan.details.map((item, i) => (
                     <li key={i}>{item}</li>
                   ))}
                 </ul>
-                <p className="text-gray-700">{layanan.closing}</p>
+                <p className="text-gray-700 text-sm md:text-base">
+                  {layanan.closing}
+                </p>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -171,30 +176,28 @@ const LayananSection = () => {
 
         {/* Navigasi & Indikator */}
         <div className="flex flex-col items-center justify-center mt-8 space-y-4">
-          {/* Tombol Navigasi */}
-          <div className="flex gap-5 ml-250">
+          <div className="flex gap-5">
             <button
               onClick={handlePrev}
-              className="text-[#341B6E] hover:text-yellow-500 cursor-pointer border bg-gray-50 rounded-full p-2"
+              className="text-[#341B6E] hover:text-yellow-500 border bg-gray-50 rounded-full p-2"
               aria-label="Previous"
             >
-              <ChevronLeft className="w-8 h-8" />
+              <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
             </button>
             <button
               onClick={handleNext}
-              className="text-[#341B6E] hover:text-yellow-500 cursor-pointer border bg-gray-50 rounded-full p-2"
+              className="text-[#341B6E] hover:text-yellow-500 border bg-gray-50 rounded-full p-2"
               aria-label="Next"
             >
-              <ChevronRight className="w-8 h-8" />
+              <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
             </button>
           </div>
 
-          {/* Indikator */}
-          <div className="flex -mt-11 gap-2">
+          <div className="flex gap-2">
             {layananList.map((_, i) => (
               <motion.span
                 key={i}
-                className={`w-3 h-3 rounded-full ${
+                className={`w-2 h-2 md:w-3 md:h-3 rounded-full ${
                   i === index ? "bg-[#341B6E]" : "bg-gray-300"
                 }`}
                 animate={{

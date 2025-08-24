@@ -5,15 +5,16 @@ import Image from "next/image";
 
 const VisiMisi = () => {
   return (
-    <section className="relative w-full bg-white text-gray-800 px-6 overflow-hidden">
+    <section className="relative w-full bg-white text-gray-800 px-4 md:px-6 overflow-hidden">
       <div className="max-w-6xl mx-auto">
+        {/* Judul Utama */}
         <h2 className="text-3xl md:text-4xl font-bold text-[#341B6E] mb-10 pt-10 border-b-4 border-[#F3C623] inline-block">
           Visi & Misi
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
           {/* Bagian Teks */}
-          <div className="relative bottom-22">
+          <div>
             {/* Visi */}
             <div className="mb-8">
               <h3 className="text-2xl font-semibold text-[#341B6E] mb-3">
@@ -51,7 +52,7 @@ const VisiMisi = () => {
           </div>
 
           {/* Bagian Gambar dengan teks */}
-          <div className="relative bottom-31 left-2 w-full h-[350px] md:h-[479px] rounded-b-[30px] overflow-visible shadow-lg">
+          <div className="relative px-20 w-full h-[350px] md:h-[479px] rounded-b-[30px] shadow-lg">
             {/* Gambar Utama */}
             <Image
               src="/images/visi-misi.png"
@@ -62,18 +63,17 @@ const VisiMisi = () => {
 
             {/* Overlay Text */}
             <div
-              className="border absolute inset-0 flex items-center justify-center px-6 rounded-b-[30px]"
+              className="absolute inset-0 flex items-center justify-center px-6 rounded-b-[30px]"
               style={{ backgroundColor: "rgba(13, 3, 99, 0.4)" }}
             >
               <p className="text-white max-w-[400px] text-sm md:text-lg font-semibold leading-relaxed text-center">
                 "Di UPT PKB Dinas Perhubungan Kota Yogyakarta, kerja keras dan
-                <br />
                 ketelitian menumbuhkan keselamatan dan kepercayaan masyarakat."
               </p>
             </div>
 
-            {/* Gambar di Atas */}
-            <div className="absolute top-12 translate-x-80 z-10">
+            {/* Icon Atas (hanya muncul di desktop) */}
+            <div className="hidden md:block absolute top-12 translate-x-80 z-10">
               <Image
                 src="/images/dot.png"
                 alt="Icon Atas"
@@ -83,8 +83,8 @@ const VisiMisi = () => {
               />
             </div>
 
-            {/* Gambar di Bawah */}
-            <div className="absolute bottom-9 translate-x-60 z-10">
+            {/* Icon Bawah (hanya muncul di desktop) */}
+            <div className="hidden md:block absolute bottom-9 translate-x-60 z-10">
               <Image
                 src="/images/garis.png"
                 alt="Icon Bawah"
